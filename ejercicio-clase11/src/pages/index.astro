@@ -1,0 +1,168 @@
+---
+import Welcome from '../components/Welcome.astro';
+import Layout from '../layouts/Layout.astro';
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Hoja de Vida - Gabriel</title>
+</head>
+<style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      line-height: 1.5;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 2rem auto;
+      width: 90%;
+    }
+
+    footer {
+      background-color: #eaeaea;
+      padding: 2rem 1rem;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+</style>
+
+<body>
+
+<header>
+  <h1>Gabriel - Hoja de Vida</h1>
+  <p>Soy un estudiante egresado de secundaria con una gran pasión por la programación. Busco seguir desarrollándome en el mundo IT.</p>
+</header>
+
+<main>
+  <section>
+    <h2>Conocimientos en IT</h2>
+    <ul>
+      <li>HTML y CSS (avanzado)</li>
+      <li>JavaScript (intermedio)</li>
+      <li>Git y GitHub</li>
+      <li>Diseño web responsivo</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Idiomas</h2>
+    <ul>
+      <li>Español (nativo)</li>
+      <li>Inglés (nivel intermedio (B1) - Certificado GESE Grade 5)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Educación</h2>
+    <ul>
+      <li>Colegio Madre Teresa - Orientación en Economía y Administración</li>
+      <li>Curso de HTML y CSS | Guayerd</li>
+      <li>Curso de JavaScript | Guayerd</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Experiencia Laboral</h2>
+    <p>No tengo :c</p>
+  </section>
+</main>
+<hr>
+<footer>
+    <section>
+        <h2>Formulario de Contacto</h2>
+        <form>
+          <label for="nombre">Nombre:</label><br>
+          <input type="text" id="nombre" name="nombre" required><br><br>
+    
+          <label for="asunto">Asunto:</label><br>
+          <input type="text" id="asunto" name="asunto" required><br><br>
+    
+          <label for="mensaje">Mensaje:</label><br>
+          <textarea id="mensaje" name="mensaje" rows="5" required></textarea><br><br>
+    
+          <button type="submit">Enviar</button>
+        </form>
+      </section>
+</footer>
+
+</body>
+</html>

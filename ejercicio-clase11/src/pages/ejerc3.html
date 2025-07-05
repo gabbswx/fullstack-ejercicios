@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gradientes y Fondos - Gabriel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+  background-color: #f0f0f0;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+div {
+  margin: 1rem auto;
+  padding: 2rem;
+  width: 80%;
+  max-width: 600px;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  height: 100px;
+}
+
+/* LINEAR GRADIENTS */
+.linear1 {
+  background: linear-gradient(to right, #B4DD1E, #0761a1);
+  animation: animation1 4s ease-in-out infinite alternate;
+}
+
+@keyframes animation1 {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4) rotate(10deg) translateX(20px); }
+  100% { transform: scale(1) rotate(-10deg) translateX(-20px); }
+}
+
+.linear2 {
+  background: linear-gradient(45deg, blue, pink);
+  animation: animation2 4s ease-in-out infinite reverse;
+}
+
+@keyframes animation2 {
+  0% { opacity: 1;  }
+  50% { opacity: 0.5; background: linear-gradient(90deg, red, lightblue); height: 200px; width: 400px; }
+  100% { opacity: 1; }
+}
+
+.linear3 {
+  animation: animation3 8s ease-in-out infinite reverse;
+}
+
+@keyframes animation3 {
+  0% {
+    transform: scale(1);
+    background-color: #8e44ad;
+    opacity: 1;
+    border-radius: 0%;
+  }
+  25% {
+    transform: rotate(45deg) scale(1.1);
+    background-color: #f39c12;
+    opacity: 0.8;
+    border-radius: 25%;
+  }
+  50% {
+    transform: rotate(-45deg) translateX(20px);
+    background-color: #16a085;
+    opacity: 0.6;
+    border-radius: 50%;
+  }
+  75% {
+    transform: scale(0.9) rotate(360deg);
+    background-color: #2c3e50;
+    opacity: 0.9;
+    border-radius: 10%;
+  }
+  100% {
+    transform: scale(1);
+    background-color: #8e44ad;
+    opacity: 1;
+    border-radius: 0%;
+  }
+}
+
+</style>
+<body>
+
+  <h1>✰ Animaciones CSS ✰</h1>
+
+  <section class="linear-gradients">
+    <h2>Animación de transformación (scale, rotate y translate)</h2>
+    <div class="linear1"></div>
+    <hr>
+    <h2>Animación de cambio de propiedades (colores, opacidad y/o dimensiones)</h2>
+    <div class="linear2"></div>
+    <hr>
+    <h2>Animación compleja (múltiples propiedades y utilice diferentes tiempos y funciones de tiempo)</h2>
+    <div class="linear3"></div>
+  </section>
+
+</body>
+</html>
