@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notificaciones en Tiempo Real</title>
+    <link rel="shortcut icon" href="bell.png" type="image/x-icon">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+      body {
+        background-color: #121212;
+        color: #f5f5f5;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #ffffff;
+      }
+
+      input, button {
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+        margin-right: 10px;
+      }
+
+      input {
+        background-color: #1e1e1e;
+        color: #fff;
+      }
+
+      button {
+        background-color: #3a3a3a;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #555;
+      }
+
+      .notification {
+        background-color: #1e1e1e;
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .notification.unread {
+        border-left: 4px solid #00aaff;
+      }
+
+      .notification.read {
+        opacity: 0.6;
+      }
+
+      .notification small {
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body>
+      <h1><span><img style="width: 30px;" src="bell.png" alt="bell"></span> Notificaciones en Tiempo Real</h1>
+
+      <div>
+        <input type="text" id="userIdInput" placeholder="Tu ID de usuario">
+        <button onclick="connect()">Conectar</button>
+      </div>
+
+      <p id="status"></p>
+      <p id="unreadCountParagraph" style="display: none;"><strong>No leídas:</strong> <span id="unreadCount">0</span></p>
+
+      <div id="notifications"></div>
+
+      <div style="margin-top:20px;">
+        <input type="text" id="notificationText" placeholder="Mensaje">
+        <button onclick="sendToMe()">Enviar a mí</button>
+        <button onclick="sendToAll()">Enviar a todos</button>
+      </div>
+    <script>
+      let socket = null;
+      let userId = '';
+
+      function connect() {
+        userId = document.getElementById('userIdInput').value.trim();
+        if (!userId) return alert('Ingresá un ID');
+
+        socket = io('http://localhost:3000', { query: { userId } });
+
+        socket.on('connect', () => {
+          document.getElementById('status').innerText = `✅ Conectado como ${userId}`;
+        });
+
+        socket.on('allNotifications', ({ notifications }) => {
+          document.getElementById('notifications').innerHTML = '';
+          notifications.forEach(renderNotification);
+        });
+
+        socket.on('unreadCountUpdated', ({ unreadCount }) => {
+          document.getElementById('unreadCount').innerText = unreadCount;
+          const paragraph = document.getElementById('unreadCountParagraph');
+          if (unreadCount > 0) {
+            paragraph.style.display = 'block';
+          } else {
+            paragraph.style.display = 'none';
+          }
+        });
+
+        socket.on('disconnect', () => {
+          document.getElementById('status').innerText = '❌ Desconectado';
+        });
+
+        socket.on('connect_error', (err) => {
+          document.getElementById('status').innerText = `❌ Error de conexión: ${err.message}`;
+        });
+        
+        socket.on('new-notification', renderNotification);
+      }
+
+      function renderNotification(notification) {
+        const container = document.getElementById('notifications');
+        const div = document.createElement('div');
+        div.className = 'notification ' + (notification.read ? 'read' : 'unread');
+        div.innerHTML = `
+          <strong>${notification.type.toUpperCase()}</strong><br>
+          ${notification.message}<br>
+          <small>${new Date(notification.timestamp).toLocaleString()}</small><br>
+          <button onclick="markAsRead('${notification.id}')">Marcar como leída</button>
+        `;
+        container.prepend(div);
+      }
+
+      function sendToMe() {
+        if (!socket || !socket.connected) {
+          alert('Primero debes conectarte.');
+          return;
+        }
+        const message = document.getElementById('notificationText').value.trim();
+        if (!message) return;
+        socket.emit('sendNotification', { user_id: userId, message, type: 'info' });
+      }
+
+      function sendToAll() {
+        if (!socket || !socket.connected) {
+          alert('Primero debes conectarte.');
+          return;
+        }
+        const message = document.getElementById('notificationText').value.trim();
+        if (!message) return;
+        socket.emit('sendNotification', { user_id: userId, message, type: 'info', toAll: true });
+      }
+
+      function markAsRead(id) {
+        if (!socket || !socket.connected) {
+          alert('Primero debes conectarte.');
+          return;
+        }
+        socket.emit('markAsRead', { id, userId });
+      }
+    </script>
+  </body>
+</html>
